@@ -17,8 +17,16 @@ const RenderedActivity = styled.div`
 
 const Activity = props => {
   return (
-    <RenderedActivity className="hover-lift transition-short">
-      <AppIcon borderRadius="1.4em" marginRight="1.6em" />
+    <RenderedActivity
+      className="hover-lift transition-short"
+      onClick={props.clicked}
+    >
+      <AppIcon
+        url={props.url}
+        bgColor={props.bgColor}
+        borderRadius="1.4em"
+        marginRight="1.6em"
+      />
       <div>
         <h3 style={{ margin: 0 }}>{props.name}</h3>
         <IconLine icon={<AccessTimeIcon />}>{props.time}</IconLine>
@@ -28,13 +36,28 @@ const Activity = props => {
 };
 
 const TopicDisplay = props => {
+  const clickedHandler = index => {
+    props.setCurrentDetail(props.media.content[index]);
+    props.setExplore(false);
+  };
+
+  const activities = props.media.content.map((med, index) => {
+    return (
+      <Activity
+        key={`media-${index}`}
+        name={med.name}
+        time={med.time}
+        bgColor={med.bgColor}
+        url={med.url}
+        clicked={() => clickedHandler(index)}
+      />
+    );
+  });
+
   return (
     <Container>
-      <h1 style={{ marginLeft: "0.5em" }}>{props.name}</h1>
-      <Activity name="Intro to Kubernetes" time="4 weeks" />
-      <Activity name="Continuous Integration" time="4 weeks" />
-      <Activity name="Intro to DevOps" time="4 weeks" />
-      <Activity name="Code Reviewing" time="4 weeks" />
+      <h1 style={{ marginLeft: "0.5em" }}>{props.media.name}</h1>
+      {activities}
     </Container>
   );
 };

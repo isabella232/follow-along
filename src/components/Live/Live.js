@@ -62,7 +62,7 @@ const PickContainer = styled.div`
 const Live = props => {
   return (
     <>
-      <Hero setExplore={props.setExplore} />
+      <Hero setExplore={props.setExplore} currentDetail={props.currentDetail}/>
 
       <Content>
         <LeftColumn>

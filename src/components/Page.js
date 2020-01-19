@@ -5,13 +5,14 @@ import Live from "./Live/Live";
 
 const Page = props => {
   const [explore, setExplore] = useState(true);
+  const [currentDetail, setCurrentDetail] = useState(null); // media, index
 
   return (
     <>
       {explore ? (
-        <Explore setExplore={setExplore} />
+        <Explore setExplore={setExplore} setCurrentDetail={setCurrentDetail} />
       ) : (
-        <Live setExplore={setExplore} />
+        <Live setExplore={setExplore} currentDetail={currentDetail} />
       )}
     </>
   );

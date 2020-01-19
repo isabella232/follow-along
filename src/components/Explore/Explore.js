@@ -61,6 +61,7 @@ const Explore = props => {
         views={views}
         activeName={activeName}
         setExplore={props.setExplore}
+        setCurrentDetail={props.setCurrentDetail}
       />
     </Container>
   );

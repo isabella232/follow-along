@@ -1,35 +1,36 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import { Redirect } from "react-router-dom";
+// import styled from "styled-components";
 
 import AuthService from "../../services/AuthService";
 import { connect } from "react-redux";
 import { login } from "../../redux/account/actions";
 
-const Container = styled.div`
-  text-align: center;
-`;
+// const Container = styled.div`
+//   text-align: center;
+// `;
 
-const Form = styled.form`
-  padding: 1em 0;
-`;
+// const Form = styled.form`
+//   padding: 1em 0;
+// `;
 
-const Guest = styled.p`
-  transition: color 0.25s ease;
-  cursor: pointer;
-  :hover {
-    color: #555;
-  }
-`;
+// const Guest = styled.p`
+//   transition: color 0.25s ease;
+//   cursor: pointer;
+//   :hover {
+//     color: #555;
+//   }
+// `;
 
 class Login extends Component {
   constructor() {
     super();
-    this.state = {
-      username: "anon" + Math.round(Math.random() * (999999 - 100000) + 100000)
-    };
+    // this.state = {
+      // username: "anon" + Math.round(Math.random() * (999999 - 100000) + 100000)
+    // };
 
-    this.inputChangeHandler = this.inputChangeHandler.bind(this);
-    this.formSubmitHandler = this.formSubmitHandler.bind(this);
+    // this.inputChangeHandler = this.inputChangeHandler.bind(this);
+    // this.formSubmitHandler = this.formSubmitHandler.bind(this);
     this.authService = new AuthService();
   }
 
@@ -37,13 +38,14 @@ class Login extends Component {
     if (this.authService.userAuthenticated()) {
       this.props.history.push("/");
     }
+    this.beGuestHandler()
   }
 
-  inputChangeHandler(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
+  // inputChangeHandler(e) {
+  //   this.setState({
+  //     [e.target.name]: e.target.value
+  //   });
+  // }
 
   beGuestHandler = () => {
     this.authService.login(
@@ -53,33 +55,34 @@ class Login extends Component {
     this.props.history.push("/");
   };
 
-  formSubmitHandler(e) {
-    e.preventDefault();
+  // formSubmitHandler(e) {
+  //   e.preventDefault();
 
-    this.authService.login(this.state.username);
-    this.props.login();
-    this.props.history.push("/");
-  }
+  //   this.authService.login(this.state.username);
+  //   this.props.login();
+  //   this.props.history.push("/");
+  // }
 
   render() {
-    return (
-      <Container>
-        <h1>Login</h1>
-        <Guest onClick={this.beGuestHandler}>
-          or be a <span style={{ textDecoration: "underline" }}>guest</span>
-        </Guest>
-        <Form onSubmit={this.formSubmitHandler}>
-          <input
-            className="form-item"
-            placeholder="enter a username"
-            name="username"
-            type="text"
-            onChange={this.inputChangeHandler}
-          />
-          <input className="form-submit" value="SUBMIT" type="submit" />
-        </Form>
-      </Container>
-    );
+    return <Redirect to="/" />;
+    // return (
+    //   <Container>
+    //     <h1>Login</h1>
+    //     <Guest onClick={this.beGuestHandler}>
+    //       or be a <span style={{ textDecoration: "underline" }}>guest</span>
+    //     </Guest>
+    //     <Form onSubmit={this.formSubmitHandler}>
+    //       <input
+    //         className="form-item"
+    //         placeholder="enter a username"
+    //         name="username"
+    //         type="text"
+    //         onChange={this.inputChangeHandler}
+    //       />
+    //       <input className="form-submit" value="SUBMIT" type="submit" />
+    //     </Form>
+    //   </Container>
+    // );
   }
 }
 

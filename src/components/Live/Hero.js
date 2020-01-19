@@ -26,47 +26,72 @@ const HeroContainer = styled.div`
 
 const DescriptionWrapper = styled.div`
   flex: 6;
+  position: relative;
+  z-index: 11;
   display: flex;
-  justify-content: center;
+  justify-content: ${props =>
+    props.currentDetail === null ? "center" : "left"};
   align-items: center;
+  pointer-events: none;
 `;
 
 const Description = styled.div`
-  width: 70%;
+  width: ${props => (props.currentDetail === null ? "70%" : "40%")};
+  ${props => (props.currentDetail === null ? "" : "padding-left: 3em;")}
+  ${props =>
+    props.currentDetail === null
+      ? ""
+      : `@media screen and (min-width: 1025px) {
+        padding-left: 5em;
+        width: 50%;
+      }`}
 `;
 
 const CardWrapper = styled.div`
   flex: 4;
   display: flex;
+  justify-content: center;
 
-  ${media.desktop`justify-content: center;`}
+  ${media.desktop`justify-content: left;`}
+`;
+
+const EmbedWrapper = styled.div`
+  position: absolute;
+  right: 5em;
+  width: 20em;
+  height: 24em;
 `;
 
 const Back = styled.p`
   cursor: pointer;
   display: inline-block;
   transition: ease color 0.15s;
+  pointer-events: auto;
 
   &:hover {
     color: ${props => props.theme.accentVariant};
   }
 `;
 
-const StudentHero = props => {
+const Hero = props => {
   return (
     <>
       <HeroBackground />
       <HeroContainer>
-        <DescriptionWrapper>
-          <Description>
+        <DescriptionWrapper currentDetail={props.currentDetail}>
+          <Description currentDetail={props.currentDetail}>
             <>
-              <Back
-                onClick={() => props.setExplore(true)}
-              >
+              <Back onClick={() => props.setExplore(true)}>
                 &#8249; Go Back
               </Back>
               <h1 style={{ margin: 0, marginBottom: "0.5em" }}>
-                Presentations done <br /> Better by Bit Project
+                {props.currentDetail === null ? (
+                  <>
+                    Presentations done <br /> Better by Bit Project
+                  </>
+                ) : (
+                  props.currentDetail.name
+                )}
               </h1>
               <p style={{ fontSize: "80%" }}>
                 Coding Best Practices are a set of informal rules that the
@@ -92,12 +117,16 @@ const StudentHero = props => {
             </>
           </Description>
         </DescriptionWrapper>
-        <CardWrapper>
-          <Card />
-        </CardWrapper>
+        {props.currentDetail === null ? (
+          <CardWrapper>
+            <Card />
+          </CardWrapper>
+        ) : (
+          <EmbedWrapper>{props.currentDetail.embed}</EmbedWrapper>
+        )}
       </HeroContainer>
     </>
   );
 };
 
-export default StudentHero;
+export default Hero;
