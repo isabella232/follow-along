@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 
-function App() {
+import Layout from "./components/Layout/Layout";
+
+import Page from './components/Page'
+import Login from "./components/Auth/Login";
+import Logout from "./components/Auth/Logout";
+import NotFound from "./components/NotFound";
+
+import WithAuthentication from "./components/HOC/WithAuthentication";
+import WithProviders from "./components/HOC/WithProviders";
+
+const App = props => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WithProviders>
+      <BrowserRouter>
+        <Layout>
+          <Switch>
+            <Route path="/" exact component={Page} />
+            <Route path="/login" exact component={Login} />
+
+            <WithAuthentication>
+              <Route path="/logout" exact component={Logout} />
+            </WithAuthentication>
+
+            <Route component={NotFound} />
+          </Switch>
+        </Layout>
+      </BrowserRouter>
+    </WithProviders>
   );
-}
+};
 
 export default App;
