@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-import AuthService from '../../services/AuthService'
+import AuthService from "../../services/AuthService";
 import Button from "../shared/NewButton";
 
 const RenderedCard = styled.div`
@@ -27,14 +28,24 @@ const Description = styled.p`
 `;
 
 const ActivityCard = props => {
-  const authService = new AuthService()
+  const authService = new AuthService();
 
   const clickHandler = () => {
     if (authService.getUsername() === null) {
-      return alert('Please login!')
+      return alert("Please login!");
     }
-    console.log(authService.getUsername())
-  }
+    console.log(authService.getUsername());
+    window.location.href="https://9d960c28.ngrok.io/meetings/59?name=" + authService.getUsername()
+    // axios.get("https://9d960c28.ngrok.io/meetings/58", {
+    //   headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Allow-Control-Allow-Methods': 'GET'
+    //   },
+    //   params: {
+    //     name: authService.getUsername()
+    //   }
+    // }).then();
+  };
 
   return (
     <RenderedCard
@@ -52,7 +63,14 @@ const ActivityCard = props => {
         Sunday, Jan 19 <br />
         2pm PST
       </Description>
-      <Button invert sharp fullWidth margin="2em 0" padding="0.5em 1.5em" clicked={clickHandler}>
+      <Button
+        invert
+        sharp
+        fullWidth
+        margin="2em 0"
+        padding="0.5em 1.5em"
+        clicked={clickHandler}
+      >
         Join
       </Button>
     </RenderedCard>
